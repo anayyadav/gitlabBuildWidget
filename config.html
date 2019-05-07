@@ -1,0 +1,51 @@
+<widget-modal widget-modal-title="Configure Build Widget" class="build-config" ng-init="buildGitlabConfig.load()">
+    <form name="buildConfigForm" role="form"
+          ng-submit="buildGitlabConfig.submit(buildConfigForm.$valid,buildGitlabConfig.collectorItemId)" novalidate="novalidate">
+        <form-group class="text-center" select="AppId" errors="{required: 'Please Select A AppName'}">
+            <label class="modal-label">Select Application Name</label>
+            <select type="text" name="collectorItemId" class="form-control" ng-model="buildGitlabConfig.selectappname"
+                typeahead-no-results="noResults" required>
+                <option ng-repeat="item in buildGitlabConfig.gitlabBuildUniqueIds.appname | orderBy" value="{{item}}">{{item}}
+                </option>
+            </select>
+            <div class="form-control" ng-show="noResults">
+                No Results Found
+            </div>
+
+        </form-group>
+
+        <form-group class="text-center" input="buildDurationThreshold" errors="{required:'Build threshold is required', pattern: 'Please enter a number'}">
+            <label class="modal-label">Build duration threshold</label>
+            <input
+                type="text"
+                name="buildDurationThreshold"
+                class="form-control-inline text-center"
+                ng-model="buildGitlabConfig.buildDurationThreshold"
+                size="3"
+                minlength="1"
+                maxlength="3"
+                pattern="\d*\.?\d*"
+                required>&nbsp;&nbsp;&nbsp;minutes
+        </form-group>
+
+        <hr/>
+
+        <form-group input="buildConsecutiveFailureThreshold" class="text-center" errors="{required:'Takeover criteria is required', pattern:'Please enter a number'}">
+            <label class="modal-label">Alert takeover criteria:</label>
+            <input
+                type="text"
+                name="buildConsecutiveFailureThreshold"
+                class="form-control-inline text-center"
+                ng-model="buildGitlabConfig.buildConsecutiveFailureThreshold"
+                size="1"
+                minlength="1"
+                maxlength="3"
+                pattern="\d*\.?\d*"
+                required>&nbsp;&nbsp;&nbsp;consecutive build fails
+        </form-group>
+
+        <div class="button-row row text-center">
+            <button type="submit" class="btn btn-primary btn-wide">Save</button>
+        </div>
+    </form>
+</widget-modal>

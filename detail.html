@@ -1,0 +1,61 @@
+<widget-modal widget-modal-close="true">
+	<div class="widget-detail build-detail">
+		<div class="widget-detail-heading">
+			<div class="row">
+				<div class="col-md-3 build-desc">
+					<span class="dash-status-lg" dash-status="{{detail.buildPassed()}}"></span>
+					<span class="build-number">Build {{::detail.build.number}}</span>
+				</div>
+				<div class="col-md-3 build-time">
+					<span>{{::detail.build.endTime | date:'MMM d, HH:mm:ss'}}</span>
+				</div>
+				<div class="col-md-2 build-duration">
+					<span>Duration: {{::detail.build.duration | duration}}</span>
+				</div>
+				<div class="col-md-4 view-in-tool">
+					<a ng-href="{{::detail.build.buildUrl}}" target="_blank">
+						View in {{detail.buildUrlNiceName()}} <span class="fa fa-angle-right"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="widget-detail-body">
+			<table class="table" >
+				<thead>
+					<tr>
+						<th>Project Name</th>
+						<th>User</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{::detail.build.projectName}}</td>
+						<td>{{::detail.build.user}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="widget-detail build-detail">
+		<table class="table" ng-show="detail.build.sourceChangeSet.length">
+			<thead>
+				<tr>
+					<th>Job</th>
+					<th>Revision</th>
+					<th>Author</th>
+					<th>Message</th>
+					<th>Commit Time </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="changeSet in detail.build.sourceChangeSet">
+					<td>{{::changeSet.name}}</td>
+					<td>{{::changeSet.scmRevisionNumber | limitTo:8}}</td>
+					<td>{{::changeSet.scmAuthor}}</td>
+					<td>{{::changeSet.scmCommitLog}}</td>
+					<td>{{::changeSet.scmCommitTimestamp | date:'MMM d, HH:mm:ss'}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</widget-modal>
